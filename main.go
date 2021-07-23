@@ -1,26 +1,13 @@
 package main
 
 import (
-	// "github.com/SuliacLEGUILLOU/test_go_framework/lib/fizzOrBuzz.go"
+	"github.com/SuliacLEGUILLOU/test_go_framework/lib"
 	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"strconv"
 )
-
-// TODO Move to package
-func FizzOrBuzz(n, a, b int, str1, str2 string) string {
-	if (n % a == 0 && n % b == 0) {
-		return str1+str2
-	} else if (n % a == 0) {
-		return str1
-	} else if (n % b == 0) {
-		return str2
-	} else {
-		return strconv.Itoa(n)
-	}
-}
 
 // TODO error management
 func getFizzy(c *gin.Context){
@@ -32,7 +19,7 @@ func getFizzy(c *gin.Context){
 
 	var res =  make([]string, limit)
 	for i := 0; i < limit; i++ {
-		str := FizzOrBuzz(i + 1, int1, int2, str1, str2)
+		str := fizzOrBuzz.FizzOrBuzz(i + 1, int1, int2, str1, str2)
 
 		res[i] = str
 	}
