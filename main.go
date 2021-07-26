@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/SuliacLEGUILLOU/test_go_framework/lib"
+	"github.com/SuliacLEGUILLOU/test_go_framework/stats"
 	"fmt"
 	"net/http"
 
@@ -31,14 +32,10 @@ func getFizzy(c *gin.Context){
 	}
 }
 
-func statsMiddleWare(c *gin.Context){
-	fmt.Println(c.Request.URL)
-}
-
 func main() {
 	router := gin.Default()
 
-	router.Use(statsMiddleWare)
+	router.Use(stats.Middleware())
 
 	router.GET("/:limit/:int1/:int2/:str1/:str2", getFizzy)
 	router.GET("/:limit/:int1/:int2", getFizzy)
