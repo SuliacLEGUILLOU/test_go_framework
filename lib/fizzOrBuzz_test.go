@@ -1,4 +1,4 @@
-package fizzOrBuzz
+package utils
 
 import "testing"
  

@@ -6,30 +6,43 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
-// TODO error management
+/**
+ *	FizzOrBuzz handler
+ */
 func getFizzy(c *gin.Context){
-	var int1, _ = strconv.Atoi(c.Param("int1"))
-	var int2, _ = strconv.Atoi(c.Param("int2"))
-	var limit, _ = strconv.Atoi(c.Param("limit"))
-	var str1 = c.Param("str1")
-	var str2 = c.Param("str2")
+	var int1 = utils.GetIntDefault(c, "int1", 3)
+	var int2 = utils.GetIntDefault(c, "int2", 5)
+	var limit = utils.GetIntDefault(c, "limit", 15)
+	var str1 = utils.GetStrDefault(c, "str1", "fizz")
+	var str2 = utils.GetStrDefault(c, "str2", "buzz")
 
-	var res =  make([]string, limit)
-	for i := 0; i < limit; i++ {
-		str := fizzOrBuzz.FizzOrBuzz(i + 1, int1, int2, str1, str2)
-
-		res[i] = str
+	if (limit > 10000){
+		c.AbortWithStatus(413)
+	} else {
+		var res =  make([]string, limit)
+		for i := 0; i < limit; i++ {
+			str := utils.FizzOrBuzz(i + 1, int1, int2, str1, str2)
+	
+			res[i] = str
+		}
+		c.IndentedJSON(http.StatusOK, res)
 	}
-	c.IndentedJSON(http.StatusOK, res)
+}
+
+func statsMiddleWare(c *gin.Context){
+	fmt.Println(c.Request.URL)
 }
 
 func main() {
 	router := gin.Default()
 
-	router.GET("/:int1/:int2/:limit/:str1/:str2", getFizzy)
+	router.Use(statsMiddleWare)
+
+	router.GET("/:limit/:int1/:int2/:str1/:str2", getFizzy)
+	router.GET("/:limit/:int1/:int2", getFizzy)
+	router.GET("/:limit", getFizzy)
 	fmt.Println("Starting...")
 	router.Run("localhost:8080")
 }

@@ -1,9 +1,10 @@
-package fizzOrBuzz
+package utils
 
 import "strconv"
 
 /**
  *	Return fizz/buzz/fizzbuzz
+ *	Params: index, fizz integer, buzz integer, fizz string, buzz string
  */
 func FizzOrBuzz(n, a, b int, str1, str2 string) string {
 	if (n % a == 0 && n % b == 0) {
