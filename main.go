@@ -32,14 +32,40 @@ func getFizzy(c *gin.Context){
 	}
 }
 
+/**
+ *	Stats handler
+ */
+ func stats_handler(c *gin.Context){
+	// Those variable should always be set by a middleware
+	path, _ := c.Get("stat_top")
+	hit, _ := c.Get("stat_hit")
+
+	c.JSON(200, gin.H{
+		"path": path,
+		"hit": hit,
+	})
+}
+
+/**
+ *	Healthcheck handler for the load balancer
+ */
+func healthcheck(c *gin.Context){
+	c.JSON(200, gin.H{
+		"code": "OK",
+	})
+}
+
 func main() {
 	router := gin.Default()
 
 	router.Use(stats.Middleware())
 
-	router.GET("/:limit/:int1/:int2/:str1/:str2", getFizzy)
-	router.GET("/:limit/:int1/:int2", getFizzy)
-	router.GET("/:limit", getFizzy)
+	router.GET("/healthcheck", healthcheck)
+	router.GET("/stats", stats_handler)
+
+	router.GET("/fb/:limit/:int1/:int2/:str1/:str2", getFizzy)
+	router.GET("/fb/:limit/:int1/:int2", getFizzy)
+	router.GET("/fb/:limit", getFizzy)
 	fmt.Println("Starting...")
 	router.Run("localhost:8080")
 }
