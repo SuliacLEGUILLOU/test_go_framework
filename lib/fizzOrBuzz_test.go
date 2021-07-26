@@ -53,3 +53,13 @@ func TestCustomStr(t *testing.T) {
         t.Fail()
     }
 }
+
+func TestLongQueryStr(t *testing.T) {
+    res1 := FizzOrBuzz(15, 3, 5, "fizz", "buzz")
+    res2 := FizzOrBuzz(30, 3, 5, "fizz", "buzz")
+    res3 := FizzOrBuzz(45, 3, 5, "fizz", "buzz")
+
+    if (res1 != res2 || res2 != res3){
+        t.Fail()
+    }
+}

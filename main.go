@@ -58,11 +58,11 @@ func healthcheck(c *gin.Context){
 func main() {
 	router := gin.Default()
 
-	router.Use(stats.Middleware())
-
 	router.GET("/healthcheck", healthcheck)
 	router.GET("/stats", stats_handler)
 
+	// Route declared after this point are include in statistics
+	router.Use(stats.Middleware())
 	router.GET("/fb/:limit/:int1/:int2/:str1/:str2", getFizzy)
 	router.GET("/fb/:limit/:int1/:int2", getFizzy)
 	router.GET("/fb/:limit", getFizzy)

@@ -5,6 +5,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/**
+ *	Return a string param from the request or a default string if empty
+ */
 func GetStrDefault(c *gin.Context, key string, def string) string {
 	ret := c.Param(key)
 
@@ -14,6 +17,9 @@ func GetStrDefault(c *gin.Context, key string, def string) string {
 	return ret
 }
 
+/**
+ *	Return a int param from the request or a default int if empty
+ */
 func GetIntDefault(c *gin.Context, key string, def int) int {
 	val := c.Param(key)
 
